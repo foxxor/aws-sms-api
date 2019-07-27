@@ -1,0 +1,30 @@
+{
+  "name": "aws-sms-api",
+  "version": "1.0.0",
+  "description": "A AWS API to Send SMS",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foxxor/aws-sms-api.git"
+  },
+  "author": "foxxor",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/foxxor/aws-sms-api/issues"
+  },
+  "homepage": "https://github.com/foxxor/aws-sms-api#readme",
+  "dependencies": {
+    "aws-sdk": "^2.501.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "aws-sdk-mock": "^4.2.0",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nock": "^10.0.2",
+    "sinon": "^7.0.0"
+  }
+}
