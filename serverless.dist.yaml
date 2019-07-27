@@ -1,0 +1,30 @@
+service: sms-api
+provider:
+  name      : aws
+  runtime   : nodejs8.10
+  region    : eu-west-1
+  role      : arn:aws:iam::AAAABBBBCCCCDDDD:role/lambda_execution
+  memorySize: 128
+  timeout   : 5
+  stage     : ${opt:stage, 'dev'}
+functions:
+  main:
+    handler: index.run
+    description: API that sends SMS
+    environment:
+      region: ${self:custom.region}
+      # Table name
+      tableSmsRecords: ${self:custom.tableNames.smsRecords}
+    exclude: 
+      - package-lock.json
+    events:
+      - http:
+          path: "/${self:custom.callbackEndpoint}"
+          method: post
+resources:
+  - ${file(resources/dynamodb.yml)}
+custom:
+  region: ${opt:region, self:provider.region}
+  callbackEndpoint: callback
+  tableNames:
+    smsRecords: sms_records
