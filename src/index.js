@@ -3,30 +3,31 @@
 const SMSService     = require('./services/SMSService.js');
 const RecordsAdapter = require('./adapters/RecordsAdapter.js');
 
+// Configuration for the classes
+const serviceConfig = {
+    aws: {
+        region: process.env.region
+    }
+};
+const adapterConfig = {
+    aws: {
+        region: process.env.region
+    },
+    db: {
+        tables: {
+            smsRecords : process.env.tableSmsRecords
+        }
+    }
+};
+
 /**
- * Handles the lambda API calls
- * @param {Object} data
+ * Handles the API requests to send SMS messages
+ * @param  {Object} data
+ * @return {Object}
  */
-module.exports.run = async ( data ) => 
+module.exports.send = async ( data ) => 
 {
     // Initializes the helper classes
-    const serviceConfig = {
-        aws: {
-            region: process.env.region
-        }
-    };
-
-    const adapterConfig = {
-        aws: {
-            region: process.env.region
-        },
-        db: {
-            tables: {
-                smsRecords : process.env.tableSmsRecords
-            }
-        }
-    };
-
     const smsService     = new SMSService( serviceConfig );
     const recordsAdapter = new RecordsAdapter( adapterConfig );
 
@@ -55,6 +56,47 @@ module.exports.run = async ( data ) =>
 
             // Stores a record in the DB
             await recordsAdapter.createRecord( sms );
+        }  
+    } 
+    catch( err ) 
+    {
+        console.log( err );
+
+        responseData = {
+            statusCode: 500,
+            body      : err
+        };
+    }
+    finally 
+    {
+        return responseData;
+    }
+}
+
+/**
+ * Handles the history 
+ * @param  {Object} data
+ * @return {Object}
+ */
+module.exports.history = async ( data ) => 
+{
+    const recordsAdapter = new RecordsAdapter( adapterConfig );
+
+    let responseData = {
+        statusCode: 200
+    };
+    
+    try {
+        // Check if all the params were sent
+        if ( !( 'phoneNumber' in data.queryStringParameters ) )
+        {
+            responseData.statusCode = 400;
+        }
+        else 
+        {
+            // Retrieves the records for the given phone number
+            const records = await recordsAdapter.getRecords( data.queryStringParameters.phoneNumber );
+            responseData.body = JSON.stringify( records );
         }  
     } 
     catch( err ) 

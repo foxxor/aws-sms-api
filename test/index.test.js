@@ -38,7 +38,7 @@ describe('Tests the SMS API lambda', _ =>
                 }, null, 2 )
         }
 
-        let response = await lambda.run( data );
+        let response = await lambda.send( data );
 
         // Asserts the response is correct
         assert.equal( response.statusCode, 200 );
@@ -48,7 +48,7 @@ describe('Tests the SMS API lambda', _ =>
         sandbox.restore();
     } );
 
-    it( 'Tests the API call is missing data', async () => 
+    it( 'Tests the send SMS API call is missing data', async () => 
     {
         // Builds the fake request and calls the lambda
         const data = {
@@ -58,13 +58,13 @@ describe('Tests the SMS API lambda', _ =>
                 }, null, 2 )
         }
 
-        let response = await lambda.run( data );
+        let response = await lambda.send( data );
 
         // Asserts the response is correct
         assert.equal( response.statusCode, 400 );
     } );
 
-    it( 'Tests an error with the process', async () => 
+    it( 'Tests an error with the SMS end process', async () => 
     {
         const sms = {
             phoneNumber: '+1234567890',
@@ -87,10 +87,53 @@ describe('Tests the SMS API lambda', _ =>
                 }, null, 2 )
         }
 
-        let response = await lambda.run( data );
+        let response = await lambda.send( data );
 
         // Asserts the response is correct
         assert.equal( response.statusCode, 500 );
+
+        // Restore the original methods to prevent other tests failing
+        sandbox.restore();
+    } );
+
+    it( 'Tests the history is retrieved correctly', async () => 
+    {
+        const records = [
+        {
+          "phoneNumber": "+1234567890",
+          "dateSent"   : "2019-07-28T11:09:56Z",
+          "message"    : "Hello World!",
+          "id"         : "ac0d5272-6083-43ae-adf2-c53dd7df4739",
+          "snsId"      : "3a874d9a-1aed-593b-8a4f-182d9e29dfa2"
+        },
+        {
+          "phoneNumber": "+1234567890",
+          "dateSent"   : "2019-07-28T11:20:36Z",
+          "message"    : "Hello World!",
+          "id"         : "2dc11a5b-81b1-4d58-a3e2-606640351189",
+          "snsId"      : "45fe1cf4-fb59-52e2-a8b4-49437c1d6a4d"
+        }
+        ];
+
+        // Mocks the used classes
+        const recordsPromise = new Promise(( resolve ) => 
+        { 
+            resolve( records );
+        });
+        sandbox.stub( RecordsAdapter.prototype, 'getRecords' ).returns( recordsPromise );
+
+        // Builds the fake request and calls the lambda
+        const data = {
+            queryStringParameters: {
+                phoneNumber: '+1234567890'
+            }
+        };
+
+        let response = await lambda.history( data );
+
+        // Asserts the response is correct
+        assert.equal( response.statusCode, 200 );
+        assert.equal( response.body, JSON.stringify( records ) );
 
         // Restore the original methods to prevent other tests failing
         sandbox.restore();

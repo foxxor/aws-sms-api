@@ -27,7 +27,7 @@ $ sls deploy
 
 ### Usage
 
-After your serverless stack is deployed, copy the URL with the endpoint and do a POST request. Sending a JSON with the phone number and the message you want to send:
+After your serverless stack is deployed, copy the URL with the endpoint and do a POST request. Sending a JSON with the phone number and the message you want to send to `/sendMessage`:
 
 ```
 {
@@ -35,6 +35,8 @@ After your serverless stack is deployed, copy the URL with the endpoint and do a
     "message": "Hello World!"
 }
 ```
+
+To retrieve the log of sent messages, make a GET request to the `/history` endpoint passing a `phoneNumber` query string / parameter and the number you want to query.
 
 ### Testing
 

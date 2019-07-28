@@ -42,13 +42,35 @@ class RecordsAdapter
         {
             this.DynamoDB.put( params, ( err, data ) => 
             {
-                if ( err )
-                {
-                    console.log( err );
-                    reject( err );
-                }
+                if ( err ) return reject( err );
 
                 resolve( params.Item );
+            } );
+        } );
+    }
+
+    /**
+     * Get all the records stored for a phone number
+     * @param  {String} phoneNumber
+     * @return {Promise|Object}
+     */
+    getRecords( phoneNumber )
+    {
+        const params = {
+            TableName: this.config.db.tables.smsRecords,
+            FilterExpression: 'phoneNumber = :phoneNumber',
+            ExpressionAttributeValues: {
+                ':phoneNumber': phoneNumber
+            }
+        };
+
+        return new Promise( ( resolve, reject ) => 
+        {
+            this.DynamoDB.scan( params, ( err, data ) => 
+            {
+                if ( err ) return reject( err );
+
+                resolve( data.Items );
             } );
         } );
     }
