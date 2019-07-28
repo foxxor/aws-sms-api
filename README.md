@@ -1,5 +1,7 @@
 # AWS SMS API
 
+An API to send SMS to any cellphone, this application also stores a record of the sent SMS in a dynamodDB table.
+
 ### Pre-requisites
 
 1. [NPM](https://docs.npmjs.com/cli/install), accessible through your CLI console.
@@ -9,7 +11,7 @@
     * AWS SNS access
     * AWS DynamoDB access
 
-# Installation
+### Installation
 
 1. Install the required NPM packages
 ```
@@ -19,4 +21,15 @@ $ npm i
 3. Run Serverless to deploy the serverless components
 ```
 $ sls deploy
+```
+
+### Usage
+
+After your serverless stack is deployed, copy the URL with the endpoint and do a POST request. Sending a JSON with the phone number and the message you want to send:
+
+```
+{
+    "phoneNumber": "+31612345678",
+    "message": "Hello World!"
+}
 ```

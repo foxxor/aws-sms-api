@@ -9,28 +9,22 @@ provider:
   stage     : ${opt:stage, 'dev'}
 functions:
   main:
-    handler: index.run
+    handler: src/index.run
     description: API that sends SMS
     environment:
-      region: ${self:custom.region}
-      # Table name
+      region         : ${self:custom.region}
       tableSmsRecords: ${self:custom.tables.smsRecords}
-      # SNS Topic
-      topicSmsQueue: ${self:custom.topics.smsQueue}
     exclude: 
       - package-lock.json
     events:
       - http:
-          path: "/${self:custom.callbackEndpoint}"
+          path  : "/sendMessage"
           method: post
 resources:
   - ${file(resources/dynamodb.yml)}
-  - ${file(resources/sns.yml)}
 custom:
   region: ${opt:region, self:provider.region}
-  callbackEndpoint: callback
   tables:
     smsRecords: sms_records
-  topics:
-    smsQueue: SMSQueue
+
 

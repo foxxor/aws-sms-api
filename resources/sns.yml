@@ -1,6 +1,0 @@
-Resources:
-  smsQueue:
-    Type: AWS::SNS::Topic
-    Properties:
-      DisplayName: 'SMS queue'
-      TopicName: ${self:custom.topics.smsQueue}
