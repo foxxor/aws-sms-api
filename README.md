@@ -6,7 +6,7 @@ This project uses the [AWS SNS SMS publishing functionality](https://docs.aws.am
 
 ### Architecture
 
-!(Architecture)[https://github.com/foxxor/aws-sms-api/blob/master/SMS_API_architecture.png?raw=true]
+![Architecture](https://github.com/foxxor/aws-sms-api/blob/master/SMS_API_architecture.png?raw=true)
 
 ### Pre-requisites
 
