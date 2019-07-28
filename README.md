@@ -12,8 +12,9 @@ This project uses the [AWS SNS SMS publishing functionality](https://docs.aws.am
 4. An AWS lambda execution role, with the following permissions:
     * AWS SNS access
     * AWS DynamoDB access
+    * (optional) Cloudwatch Logs creation
 
-### Installation
+### Installation / Deployment
 
 1. Install the required NPM packages
 ```
