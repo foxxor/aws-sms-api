@@ -9,6 +9,7 @@ const RecordsAdapter = require('./adapters/RecordsAdapter.js');
  */
 module.exports.run = async ( data ) => 
 {
+    // Initializes the helper classes
     const serviceConfig = {
         aws: {
             region: process.env.region
@@ -29,6 +30,7 @@ module.exports.run = async ( data ) =>
     const smsService     = new SMSService( serviceConfig );
     const recordsAdapter = new RecordsAdapter( adapterConfig );
 
+    // Parses the body data
     const parsedData = JSON.parse( data.body );
 
     let responseData = {
@@ -36,7 +38,7 @@ module.exports.run = async ( data ) =>
     };
     
     try {
-        // Check if the right params were sent
+        // Check if all the params were sent
         if ( !( 'phoneNumber' in parsedData ) || !( 'message' in parsedData ) )
         {
             responseData.statusCode = 400;

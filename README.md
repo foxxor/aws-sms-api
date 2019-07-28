@@ -2,6 +2,8 @@
 
 An API to send SMS to any cellphone, this application also stores a record of the sent SMS in a dynamodDB table.
 
+This project uses the [AWS SNS SMS publishing functionality](https://docs.aws.amazon.com/sns/latest/dg/sms_publish-to-phone.html).
+
 ### Pre-requisites
 
 1. [NPM](https://docs.npmjs.com/cli/install), accessible through your CLI console.
@@ -32,4 +34,11 @@ After your serverless stack is deployed, copy the URL with the endpoint and do a
     "phoneNumber": "+31612345678",
     "message": "Hello World!"
 }
+```
+
+### Testing
+
+You can unit test this application by using:
+```
+$ npm test
 ```
