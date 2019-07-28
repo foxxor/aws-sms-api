@@ -2,7 +2,7 @@ Resources:
   smsRecordsTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: ${self:custom.tableNames.smsRecords}
+      TableName: ${self:custom.tables.smsRecords}
       AttributeDefinitions:
         - AttributeName: id
           AttributeType: S

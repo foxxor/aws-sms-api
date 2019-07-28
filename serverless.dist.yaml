@@ -2,7 +2,7 @@ service: sms-api
 provider:
   name      : aws
   runtime   : nodejs8.10
-  region    : eu-west-1
+  region    : ur-region-5
   role      : arn:aws:iam::AAAABBBBCCCCDDDD:role/lambda_execution
   memorySize: 128
   timeout   : 5
@@ -14,7 +14,9 @@ functions:
     environment:
       region: ${self:custom.region}
       # Table name
-      tableSmsRecords: ${self:custom.tableNames.smsRecords}
+      tableSmsRecords: ${self:custom.tables.smsRecords}
+      # SNS Topic
+      topicSmsQueue: ${self:custom.topics.smsQueue}
     exclude: 
       - package-lock.json
     events:
@@ -23,8 +25,12 @@ functions:
           method: post
 resources:
   - ${file(resources/dynamodb.yml)}
+  - ${file(resources/sns.yml)}
 custom:
   region: ${opt:region, self:provider.region}
   callbackEndpoint: callback
-  tableNames:
+  tables:
     smsRecords: sms_records
+  topics:
+    smsQueue: SMSQueue
+

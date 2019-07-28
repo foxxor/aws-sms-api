@@ -11,10 +11,16 @@ module.exports.callback = async ( data ) =>
     const config = {
         awsRegion: process.env.region,
         db: {
-            tableNames: {
+            tables: {
                 jobs : process.env.tableSmsRecords
             }
         },
+        sns: {
+            topics: 
+            {
+                sms: process.env.topicSmsQueue
+            }
+        }
     };
     const parsedData = JSON.parse( data.body );
 
