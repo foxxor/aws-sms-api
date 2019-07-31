@@ -99,20 +99,20 @@ describe('Tests the SMS API lambda', _ =>
     it( 'Tests the history is retrieved correctly', async () => 
     {
         const records = [
-        {
-          "phoneNumber": "+1234567890",
-          "dateSent"   : "2019-07-28T11:09:56Z",
-          "message"    : "Hello World!",
-          "id"         : "ac0d5272-6083-43ae-adf2-c53dd7df4739",
-          "snsId"      : "3a874d9a-1aed-593b-8a4f-182d9e29dfa2"
-        },
-        {
-          "phoneNumber": "+1234567890",
-          "dateSent"   : "2019-07-28T11:20:36Z",
-          "message"    : "Hello World!",
-          "id"         : "2dc11a5b-81b1-4d58-a3e2-606640351189",
-          "snsId"      : "45fe1cf4-fb59-52e2-a8b4-49437c1d6a4d"
-        }
+            {
+              "phoneNumber": "+1234567890",
+              "dateSent"   : "2019-07-28T11:09:56Z",
+              "message"    : "Hello World!",
+              "id"         : "ac0d5272-6083-43ae-adf2-c53dd7df4739",
+              "snsId"      : "3a874d9a-1aed-593b-8a4f-182d9e29dfa2"
+            },
+            {
+              "phoneNumber": "+1234567890",
+              "dateSent"   : "2019-07-28T11:20:36Z",
+              "message"    : "Hello World!",
+              "id"         : "2dc11a5b-81b1-4d58-a3e2-606640351189",
+              "snsId"      : "45fe1cf4-fb59-52e2-a8b4-49437c1d6a4d"
+            }
         ];
 
         // Mocks the used classes

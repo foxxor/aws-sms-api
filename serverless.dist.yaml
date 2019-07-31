@@ -8,9 +8,9 @@ provider:
   timeout   : 5
   stage     : ${opt:stage, 'dev'}
 functions:
-  main:
-    handler: src/index.run
-    description: API that sends SMS
+  send:
+    handler: src/index.send
+    description: API that sends SMS to a specified recipient
     environment:
       region         : ${self:custom.region}
       tableSmsRecords: ${self:custom.tables.smsRecords}
@@ -20,6 +20,18 @@ functions:
       - http:
           path  : "/sendMessage"
           method: post
+  history:
+    handler: src/index.history
+    description: API that retrieves the messages sent to a particular recipient
+    environment:
+      region         : ${self:custom.region}
+      tableSmsRecords: ${self:custom.tables.smsRecords}
+    exclude: 
+      - package-lock.json
+    events:
+      - http:
+          path  : "/history"
+          method: get
 resources:
   - ${file(resources/dynamodb.yml)}
 custom:
