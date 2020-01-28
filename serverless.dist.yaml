@@ -1,7 +1,7 @@
 service: sms-api
 provider:
   name      : aws
-  runtime   : nodejs8.10
+  runtime   : nodejs12.x
   region    : ur-region-5
   role      : arn:aws:iam::AAAABBBBCCCCDDDD:role/lambda_execution
   memorySize: 128
