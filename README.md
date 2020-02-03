@@ -4,6 +4,8 @@ An API to send SMS to any cellphone, this application also stores a record of th
 
 This project uses the [AWS SNS SMS publishing functionality](https://docs.aws.amazon.com/sns/latest/dg/sms_publish-to-phone.html).
 
+You can find a full explanation of this project on [this medium post](https://medium.com/@foxxor/building-your-own-sms-serverless-api-c8d09c0b65eb).
+
 ### Architecture
 
 ![Architecture](https://github.com/foxxor/aws-sms-api/blob/master/SMS_API_architecture.png?raw=true)
