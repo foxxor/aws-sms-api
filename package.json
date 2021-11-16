@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/foxxor/aws-sms-api#readme",
   "dependencies": {
-    "aws-sdk": "^2.501.0",
+    "aws-sdk": "^2.814.0",
     "moment": "^2.24.0",
     "uuid": "^3.3.2"
   },
